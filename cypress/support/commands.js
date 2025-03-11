@@ -10,43 +10,41 @@ Cypress.Commands.add('registerTestUser', (user) => {
     let signupPassword = user.password
 
     cy.log(`Create (new) login for ${signupEmail} ("${signupPassword}")`)
-    // Click Signup/Login button
-    cy.contains('Signup / Login', { log: false }).click({ log: false })
-
-    // Verify signup section is visible
-    cy.contains('New User Signup!', { log: false }).should('be.visible', { log: false })
 
     // Enter registration details
-    cy.get('[data-qa="signup-name"]', { log: false }).type(user.name, { log: false })
-    cy.get('[data-qa="signup-email"]', { log: false }).type(signupEmail, { log: false })
-    cy.get('[data-qa="signup-button"]', { log: false }).click({ log: false })
-
-    // Verify and fill account info
-    cy.contains('Enter Account Information', { log: false }).should('be.visible', { log: false })
     cy.get('#id_gender1', { log: false }).check({ log: false })
-    cy.get('#password', { log: false }).type(signupPassword, { log: false })
-    cy.get('#days', { log: false }).select('1', { log: false })
-    cy.get('#months', { log: false }).select('January', { log: false })
-    cy.get('#years', { log: false }).select('1990', { log: false })
 
     // Select checkboxes
     cy.get('#newsletter', { log: false }).check({ log: false })
     cy.get('#optin', { log: false }).check({ log: false })
 
-    // Fill address info
-    cy.get('#first_name', { log: false }).type(user.name.split(' ')[0], { log: false })
-    cy.get('#last_name', { log: false }).type(user.name.split(' ')[1], { log: false })
-    cy.get('#company', { log: false }).type(user.company.name, { log: false })
-    cy.get('#address1', { log: false }).type(user.address.street, { log: false })
-    cy.get('#address2', { log: false }).type(user.address.suite, { log: false })
-    cy.get('#country', { log: false }).select('United States', { log: false })
-    cy.get('#state', { log: false }).type(user.address.city, { log: false })
-    cy.get('#city', { log: false }).type(user.address.city, { log: false })
-    cy.get('#zipcode', { log: false }).type(user.address.zipcode, { log: false })
-    cy.get('#mobile_number', { log: false }).type(user.phone, { log: false })
 
-    // Create account
-    cy.get('[data-qa="create-account"]', { log: false }).click({ log: false })
+    cy.request({
+        method: 'POST',
+        url: 'https://automationexercise.com/api/createAccount',
+        body: {
+          name: user.name,
+          email: signupEmail,
+          password: signupPassword,
+          title: 'Mr',
+          birth_date: '15',
+          birth_month: '5',
+          birth_year: '1990',
+          firstname: user.name.split(' ')[0],
+          lastname: user.name.split(' ')[1],
+          company: user.company.name,
+          address1: user.address.street,
+          address2: user.address.suite,
+          country: 'United States',
+          zipcode: user.address.zipcode,
+          state: user.address.city,
+          city: user.address.city,
+          mobile_number: user.phone
+        },
+        failOnStatusCode: false
+      }).should((response) => {
+        expect(response.status).to.eq(201)
+      })
 })
 
 Cypress.Commands.add('registerUser', (user) => {

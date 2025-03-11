@@ -12,6 +12,8 @@ automationexercise.com is a test site explicitly for test automation exersizes.
 
 We have no access to database, code or testdata, so we'll need to work within these limits.
 
-Limits:
-* Test dat will have to be (re-)created before each test
-* Not all elements have ID's or test identifiers and some have to be selected using the element text. (!) This is BRITTLE!! In practice i would insist these identifiers be added or would add them myself.
+## Notes and Limits:
+* Used robot pattern/principle as much as possible: For one method for each action named from perspective of the users' journey
+* Test data will be (re-)created before each test
+* Not all elements have ID's or test identifiers and some have to be selected using the element text. 
+  (!) This is BRITTLE!! In practice i would insist these identifiers be added or would add them myself.
