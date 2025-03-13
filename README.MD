@@ -17,3 +17,8 @@ We have no access to database, code or testdata, so we'll need to work within th
 * Test data will be (re-)created before each test
 * Not all elements have ID's or test identifiers and some have to be selected using the element text. 
   (!) This is BRITTLE!! In practice i would insist these identifiers be added or would add them myself.
+  
+  
+ # Todo
+ 
+ Add my own plugin https://github.com/best-testing-monkey/cypress-geometry-snapshot (after getting that up to current standards: its been three years since updating)
